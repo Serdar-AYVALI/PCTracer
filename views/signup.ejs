@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol</title>
+    <link rel="stylesheet" href="/css/sign.css">
+
+    <script>
+        function validateForm() {
+            var password = document.getElementById("password").value;
+            if (password.length < 6) {
+                alert("Şifre en az 6 karakter olmalıdır.");
+                return false;
+            }
+            return true;
+        }
+        
+    </script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="title-text">
+            
+            <div class="title signup">Üye Ol</div>
+        </div>
+        <div class="form-container">
+            
+            <div class="form-inner">
+               
+                <!--Giriş Kısmı-->
+                <form action="/user/signup" method="POST" class="signup">
+                    <div class="field">
+                        <input type="text"  name = "username" placeholder="İsim" required>
+                    </div>
+                    <div class="field">
+                        <input type="text"  name = "surname" placeholder="Soyisim" required>
+                    </div>
+                    <div class="field">
+                        <input type="text"  name = "email" placeholder="E-Posta Adresi" required>
+                    </div>
+                    <div class="field">
+                        <input type="password" name = "password" placeholder="Şifre" required>
+                    </div>
+                    
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Üye Ol">
+                    </div>
+                    <div class="signup-link">Zaten hesabınız var mı? <a href="/login">Giriş Yap</a></div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

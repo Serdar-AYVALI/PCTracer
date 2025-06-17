@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap</title>
+    <link rel="stylesheet" href="/css/sign.css">
+    
+</head>
+
+<body >
+
+    <div class="wrapper">
+    <div class="title-text">
+        <div class="title login">Giriş Yap</div> <!--Başlıklar-->
+        
+    </div>
+    <div class="form-container">
+                            
+        <div class="form-inner">
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div style="color:red; margin-bottom:10px;"><%= error %></div>
+            <% } %>
+            <form action="/user/login" method="POST" class="login" >
+                <div class="field">
+                    <input type="email" name="email" placeholder="E-Posta Adresi" required>
+                </div>
+                <div class="field">
+                    <input type="password" name="password" placeholder="Şifre" required>
+                </div>
+                <div class="field btn">
+                    <div class="btn-layer"></div>
+                    <input type="submit" value="Giriş Yap">
+                </div>
+                <!--<div class="signup-link">Üye değil misin? <a href="signup.html">Şimdi Üye Ol</a></div>-->
+            </form>
+            <!--Giriş Kısmı-->
+            
+        </div>
+    </div>
+
+
+</body>
+
+</html>

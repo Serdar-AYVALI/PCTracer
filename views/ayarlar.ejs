@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8">   
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <!-- 
+        width=device-width: Sayfanın genişliğini cihazın ekran genişliğine eşitler.
+        initial-scale=1: Sayfanın başlangıçta yakınlaştırma seviyesini 1 (yani %100) olarak ayarlar.
+        shrink-to-fit=no: Safari'nin sayfayı otomatik olarak küçültmesini engeller. -->
+      
+        <meta http-equiv="x-ua-compatible" content="ie=edge"><!--
+        Internet Explorer tarayıcısına sayfayı en yeni ve en modern modda (edge mode) render etmesini söyler.-->
+        
+        <link rel="shortcut icon" href="/img/favicon.ico">
+        <!-- sekmede küçük bir simge görüntülenir.-->
+    
+        <title>Kullanıcı Yönetimi - PCTracer</title>
+        <style>
+          body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+          }
+          h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+          }
+          .controls {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          }
+          .controls input {
+            padding: 8px;
+            width: 50px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+          }
+          .controls button {
+            padding: 8px 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+          }
+          .controls button:hover {
+            background: #2980b9;
+          }
+          .user-list {
+            list-style: none;
+            padding: 0;
+            border: 1px solid #eee;
+            border-radius: 5px;
+          }
+          .user-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .user-item:last-child {
+            border-bottom: none;
+          }
+          .delete-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+          }
+          .delete-btn:hover {
+            background: #c0392b;
+          }
+          .info-message {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+          }
+          .error {
+            color: #e74c3c;
+            padding: 10px;
+            background: #fadbd8;
+            border-radius: 4px;
+            margin-top: 10px;
+          }
+        </style>
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="/img/logo.png" alt="PCTRACER Logo">
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Navbar -->
+            <header>
+                <div class="navbar">
+                    <nav class="nav-links">
+                        <a href="/">
+                            <svg fill="#000000" width="20px" height="20px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)rotate(0)">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                <g id="SVGRepo_iconCarrier"> <path d="M833.935 1063.327c28.913 170.315 64.038 348.198 83.464 384.79 27.557 51.84 92.047 71.944 144 44.387 51.84-27.558 71.717-92.273 44.16-144.113-19.426-36.593-146.937-165.46-271.624-285.064Zm-43.821-196.405c61.553 56.923 370.899 344.81 415.285 428.612 56.696 106.842 15.811 239.887-91.144 296.697-32.64 17.28-67.765 25.411-102.325 25.411-78.72 0-154.955-42.353-194.371-116.555-44.386-83.802-109.102-501.346-121.638-584.245-3.501-23.717 8.245-47.21 29.365-58.277 21.346-11.294 47.096-8.02 64.828 8.357ZM960.045 281.99c529.355 0 960 430.757 960 960 0 77.139-8.922 153.148-26.654 225.882l-10.39 43.144h-524.386v-112.942h434.258c9.487-50.71 14.231-103.115 14.231-156.084 0-467.125-380.047-847.06-847.059-847.06-467.125 0-847.059 379.935-847.059 847.06 0 52.97 4.744 105.374 14.118 156.084h487.454v112.942H36.977l-10.39-43.144C8.966 1395.137.044 1319.128.044 1241.99c0-529.243 430.645-960 960-960Zm542.547 390.686 79.85 79.85-112.716 112.715-79.85-79.85 112.716-112.715Zm-1085.184 0L530.123 785.39l-79.85 79.85L337.56 752.524l79.849-79.85Zm599.063-201.363v159.473H903.529V471.312h112.942Z" fill-rule="evenodd"/> </g>
+                                </svg>
+                            Gösterge Paneli
+                        </a>
+                        <a href="/activities">
+                          <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                          Aktivite Takip
+                        </a>
+                        <a href="/iletisim">
+                            <svg fill="#000000" width="20px" height="20px" viewBox="0 0 64 64" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <path d="M32,1C14.9072,1,1.001,14.9067,1.001,32S14.9072,63,32,63s30.999-13.9067,30.999-31S49.0928,1,32,1z M46.7568,31    c-0.0324-2.1485-0.1685-4.2808-0.4067-6.3666c1.3589-0.485,2.4686-1.4901,3.0918-2.7772    C56.0771,24.0959,60.2359,27.4291,60.8954,31H46.7568z M44.3726,39.0518c-2.9026,0.0765-5.2448,2.4193-5.3213,5.3214    c-1.9846,0.2237-4.0108,0.3524-6.0513,0.3841V33h11.7568C44.7252,35.0426,44.5967,37.0689,44.3726,39.0518z M33,31V19.246    c2.0505,0.0314,4.0767,0.1591,6.0513,0.381c0.0766,2.902,2.4188,5.2447,5.3213,5.3212c0.2241,1.9828,0.3527,4.0092,0.3843,6.0518    H33z M44.5176,22.9556c-1.915,0-3.4736-1.5581-3.4736-3.4736c0-1.915,1.5586-3.4731,3.4736-3.4731s3.4736,1.5581,3.4736,3.4731    C47.9912,21.3975,46.4326,22.9556,44.5176,22.9556z M39.366,17.6501c-2.0773-0.2368-4.2094-0.372-6.366-0.4041V3.1034    c3.5742,0.6591,6.9073,4.8182,9.1432,11.4547C40.8559,15.1812,39.8508,16.2911,39.366,17.6501z M31,3.097v14.1451    c-3.6047,0.052-7.0351,0.3829-10.2034,0.9517C22.8394,9.7535,26.668,3.8873,31,3.097z M31,19.2421V31h-7.3917    c-0.3975-2.1418-2.0439-3.8463-4.1541-4.3305c0.184-2.2051,0.478-4.3188,0.8689-6.3129    C23.6259,19.6952,27.2342,19.3017,31,19.2421z M18.2314,35.4731c-1.918,0-3.4775-1.5581-3.4775-3.4731    s1.5596-3.4731,3.4775-3.4731c1.915,0,3.4727,1.5581,3.4727,3.4731S20.1465,35.4731,18.2314,35.4731z M17.4542,26.5885    c-2.3233,0.3321-4.1789,2.121-4.6044,4.4115H3.103c0.8047-4.3291,6.7612-8.1297,15.0952-10.1736    C17.8681,22.6607,17.6182,24.5873,17.4542,26.5885z M12.8498,33c0.4255,2.2905,2.2811,4.0794,4.6044,4.4115    c0.1642,2.0023,0.4142,3.93,0.7446,5.7653C9.8643,41.1323,3.9075,37.3306,3.103,33H12.8498z M19.4542,37.3305    c2.1101-0.4842,3.7565-2.1887,4.1541-4.3305H31v11.7614c-3.7656-0.0596-7.3736-0.4533-10.6763-1.1147    C19.9324,41.6517,19.6383,39.5368,19.4542,37.3305z M31,46.7613V60.903c-4.3314-0.7902-8.1597-6.6549-10.2026-15.0935    C23.9655,46.3783,27.3956,46.7093,31,46.7613z M33,60.8964V46.7573c2.1461-0.0324,4.2782-0.1686,6.366-0.4072    c0.4849,1.359,1.4902,2.4689,2.7775,3.092C39.9038,56.0775,36.5709,60.2366,33,60.8964z M41.0439,44.5181    c0-1.9155,1.5586-3.4736,3.4736-3.4736s3.4736,1.5581,3.4736,3.4736c0,1.915-1.5586,3.4731-3.4736,3.4731    S41.0439,46.4331,41.0439,44.5181z M46.35,39.3666c0.2383-2.0858,0.3743-4.2181,0.4067-6.3666h14.1387    c-0.6595,3.5709-4.8183,6.9041-11.4536,9.1438C48.8187,40.8568,47.7089,39.8516,46.35,39.3666z M60.3704,25.9969    c-2.2195-2.4177-5.7788-4.5214-10.4017-6.0711c0.0118-0.1468,0.0225-0.294,0.0225-0.4438c0-3.0181-2.4551-5.4731-5.4736-5.4731    c-0.1496,0-0.2966,0.0106-0.4432,0.0225c-1.5475-4.6228-3.6501-8.182-6.0676-10.4017    C49.1861,5.9941,58.0074,14.8167,60.3704,25.9969z M25.9716,3.6345c-3.2159,2.9634-5.822,8.2573-7.3279,14.9893    c-6.7022,1.4893-12.0201,4.0807-15.0005,7.3146C6.023,14.7933,14.8222,6.0018,25.9716,3.6345z M3.6436,38.0635    c2.9807,3.2344,8.2986,5.8265,15.0007,7.316c1.5061,6.7305,4.1119,12.023,7.3273,14.986    C14.8229,57.9984,6.024,49.2076,3.6436,38.0635z M38.003,60.3714c2.4175-2.2197,4.5209-5.7791,6.0702-10.4027    c0.147,0.0119,0.2944,0.0225,0.4444,0.0225c3.0186,0,5.4736-2.4551,5.4736-5.4731c0-0.1498-0.0107-0.2971-0.0225-0.4438    c4.6229-1.5497,8.1822-3.6534,10.4017-6.0711C58.0072,49.1846,49.1841,58.0081,38.003,60.3714z"/>
+                            </svg>
+                            İletişim
+                        </a>
+                        <a href="/ayarlar" class="active">
+                            <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.65 3L9.93163 3.53449L9.32754 5.54812L7.47651 4.55141L6.5906 4.68143L4.68141 6.59062L4.55139 7.47652L5.5481 9.32755L3.53449 9.93163L3 10.65V13.35L3.53449 14.0684L5.54811 14.6725L4.55142 16.5235L4.68144 17.4094L6.59063 19.3186L7.47653 19.4486L9.32754 18.4519L9.93163 20.4655L10.65 21H13.35L14.0684 20.4655L14.6725 18.4519L16.5235 19.4486L17.4094 19.3185L19.3186 17.4094L19.4486 16.5235L18.4519 14.6724L20.4655 14.0684L21 13.35V10.65L20.4655 9.93163L18.4519 9.32754L19.4486 7.47654L19.3186 6.59063L17.4094 4.68144L16.5235 4.55142L14.6725 5.54812L14.0684 3.53449L13.35 3H10.65ZM10.4692 6.96284L11.208 4.5H12.792L13.5308 6.96284L13.8753 7.0946C13.9654 7.12908 14.0543 7.16597 14.142 7.2052L14.4789 7.35598L16.7433 6.13668L17.8633 7.25671L16.644 9.52111L16.7948 9.85803C16.834 9.9457 16.8709 10.0346 16.9054 10.1247L17.0372 10.4692L19.5 11.208V12.792L17.0372 13.5308L16.9054 13.8753C16.8709 13.9654 16.834 14.0543 16.7948 14.1419L16.644 14.4789L17.8633 16.7433L16.7433 17.8633L14.4789 16.644L14.142 16.7948C14.0543 16.834 13.9654 16.8709 13.8753 16.9054L13.5308 17.0372L12.792 19.5H11.208L10.4692 17.0372L10.1247 16.9054C10.0346 16.8709 9.94569 16.834 9.85803 16.7948L9.52111 16.644L7.25671 17.8633L6.13668 16.7433L7.35597 14.4789L7.2052 14.142C7.16597 14.0543 7.12908 13.9654 7.0946 13.8753L6.96284 13.5308L4.5 12.792L4.5 11.208L6.96284 10.4692L7.0946 10.1247C7.12907 10.0346 7.16596 9.94571 7.20519 9.85805L7.35596 9.52113L6.13666 7.2567L7.25668 6.13667L9.5211 7.35598L9.85803 7.2052C9.9457 7.16597 10.0346 7.12908 10.1247 7.0946L10.4692 6.96284ZM14.25 12C14.25 13.2426 13.2426 14.25 12 14.25C10.7574 14.25 9.75 13.2426 9.75 12C9.75 10.7574 10.7574 9.75 12 9.75C13.2426 9.75 14.25 10.7574 14.25 12ZM15.75 12C15.75 14.0711 14.0711 15.75 12 15.75C9.92893 15.75 8.25 14.0711 8.25 12C8.25 9.92893 9.92893 8.25 12 8.25C14.0711 8.25 15.75 9.92893 15.75 12Z" fill="#080341"/>
+                            </svg>
+                            Ayarlar
+                        </a>
+                    </nav>
+                    <div class="auth-buttons">
+                        <a href="/logout" class="btn-logout">
+                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.70711 8.29287C6.09763 8.6834 6.09763 9.31656 5.70711 9.70709L4.41421 11H13C13.5523 11 14 11.4477 14 12C14 12.5523 13.5523 13 13 13H4.41421L5.70711 14.2929C6.09763 14.6834 6.09763 15.3166 5.70711 15.7071C5.31658 16.0976 4.68342 16.0976 4.29289 15.7071L1.29289 12.7071C0.902369 12.3166 0.902369 11.6834 1.29289 11.2929L4.29289 8.29287C4.68342 7.90235 5.31658 7.90235 5.70711 8.29287Z" fill="#000000"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7507 1.77796C13.7744 1.78191 13.7981 1.78588 13.822 1.78985L16.2134 2.18843C17.3573 2.37904 18.3068 2.53727 19.0544 2.75982C19.8423 2.9944 20.5236 3.33202 21.0521 3.95586C21.5806 4.5797 21.8016 5.30724 21.9034 6.123C22.0001 6.89696 22 7.85957 22 9.01924V14.9807C22 16.1404 22.0001 17.103 21.9034 17.877C21.8016 18.6927 21.5806 19.4203 21.0521 20.0441C20.5236 20.6679 19.8423 21.0056 19.0544 21.2401C18.3068 21.4627 17.3573 21.6209 16.2134 21.8115L13.7507 22.222C12.7306 22.3921 11.8613 22.537 11.161 22.5539C10.4166 22.5719 9.68102 22.4535 9.06088 21.9281C8.44073 21.4028 8.20297 20.6967 8.09833 19.9594C7.9999 19.2659 7.99994 18.3846 8 17.3505L8 17.0659C8 16.5137 8.44772 16.0659 9 16.0659C9.55228 16.0659 10 16.5137 10 17.0659V17.2781C10 18.4046 10.0024 19.1422 10.0785 19.6784C10.1507 20.1868 10.2665 20.3283 10.3536 20.4021C10.4407 20.4759 10.5993 20.5669 11.1127 20.5545C11.6541 20.5414 12.382 20.4225 13.4932 20.2373L15.822 19.8492C17.0446 19.6454 17.8699 19.506 18.4837 19.3233C19.0708 19.1485 19.3436 18.9667 19.526 18.7514C19.7085 18.536 19.8429 18.237 19.9188 17.6292C19.9982 16.9937 20 16.1567 20 14.9172V9.08274C20 7.84331 19.9982 7.00629 19.9188 6.37078C19.8429 5.76297 19.7085 5.46401 19.526 5.24861C19.3436 5.03322 19.0708 4.85146 18.4837 4.67668C17.8699 4.49393 17.0446 4.35454 15.822 4.15077L13.4932 3.76264C12.382 3.57745 11.6541 3.45854 11.1127 3.44546C10.5993 3.43306 10.4407 3.52409 10.3536 3.59788C10.2665 3.67167 10.1507 3.81313 10.0785 4.32159C10.0024 4.85772 10 5.59532 10 6.72182V7.13191C10 7.6842 9.55228 7.13191 9 7.13191C8.44772 7.13191 8 7.6842 8 7.13191V6.72182C8 6.69764 8 6.67353 8 6.64951C7.99994 5.61539 7.9999 4.73401 8.09833 4.04053C8.20297 3.30326 8.44073 2.59718 9.06088 2.07184C9.68102 1.5465 10.4166 1.42806 11.161 1.44604C11.8612 1.46296 12.7306 1.6079 13.7507 1.77796Z" fill="#000000"/>
+                            </svg>
+                            Çıkış Yap
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <div class="content">
+                <h1>Kullanıcı Yönetimi</h1>
+                
+                <div class="controls">
+                  <span>Son</span>
+                  <input type="number" id="daysInput" value="7" min="0">
+                  <span>gün içinde aktif olan kullanıcıları getir</span>
+                  <button onclick="loadActiveUsers()">Aktif Kullanıcıları Getir</button>
+                </div>
+                
+                <ul class="user-list" id="userList">
+                  <div class="loading">Kullanıcı listesi yükleniyor...</div>
+                </ul>
+              
+                <script>
+                  let currentUsers = [];
+                  
+                  // Sayfa yüklendiğinde mevcut kullanıcıları getir
+                  document.addEventListener('DOMContentLoaded', async () => {
+                    try {
+                      const response = await fetch('/api/existing-users');
+                      if (!response.ok) throw new Error('Sunucu hatası');
+                      
+                      currentUsers = await response.json();
+                      renderUserList();
+                    } catch (err) {
+                      document.getElementById('userList').innerHTML = `
+                        <div class="error">Hata: ${err.message}</div>
+                        <button onclick="location.reload()">Tekrar Dene</button>
+                      `;
+                    }
+                  });
+                  
+                  // Aktif kullanıcıları yükle
+                  async function loadActiveUsers() {
+                    const days = document.getElementById('daysInput').value;
+                    const userList = document.getElementById('userList');
+                    
+                    try {
+                      userList.innerHTML = '<div class="loading">Aktif kullanıcılar yükleniyor...</div>';
+                      
+                      const response = await fetch(`/api/active-users?days=${days}`);
+                      if (!response.ok) throw new Error('Sunucu hatası');
+                      
+                      currentUsers = await response.json();
+                      renderUserList();
+                    } catch (err) {
+                      userList.innerHTML = `
+                        <div class="error">Hata: ${err.message}</div>
+                        <button onclick="loadActiveUsers()">Tekrar Dene</button>
+                      `;
+                    }
+                  }
+                  
+                  // Kullanıcı sil
+                  async function deleteUser(userId) {
+                    const user = currentUsers.find(u => u._id === userId);
+                    if (!user) return;
+                    
+                    if (!confirm(`"${user.name}" kullanıcısını silmek istediğinize emin misiniz?`)) {
+                      return;
+                    }
+                    
+                    try {
+                      const response = await fetch(`/api/users/${userId}`, {
+                        method: 'DELETE'
+                      });
+                      
+                      if (!response.ok) {
+                        const error = await response.json();
+                        throw new Error(error.error || 'Silme işlemi başarısız');
+                      }
+                      
+                      // Sadece silinen kullanıcıyı listeden kaldır
+                      currentUsers = currentUsers.filter(u => u._id !== userId);
+                      renderUserList();
+                    } catch (err) {
+                      alert(`Hata: ${err.message}`);
+                    }
+                  }
+                  
+                  // Listeyi render et
+                  function renderUserList() {
+                    const userList = document.getElementById('userList');
+                    
+                    if (currentUsers.length === 0) {
+                      userList.innerHTML = '<div class="info-message">Kullanıcı bulunamadı</div>';
+                      return;
+                    }
+                    
+                    userList.innerHTML = currentUsers.map(user => `
+                      <li class="user-item">
+                        <span>${user.name}</span>
+                        <button class="delete-btn" onclick="deleteUser('${user._id}')">Sil</button>
+                      </li>
+                    `).join('');
+                  }
+                  
+                  // Enter tuşu ile aktif kullanıcıları getir
+                  document.getElementById('daysInput').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') loadActiveUsers();
+                  });
+                </script>
+
+                <!-- Admin Yönetimi Başlangıç -->
+                <h1 style="margin-top:40px;">Admin Yönetimi</h1>
+                <div class="controls admin-controls">
+                  <form id="adminAddForm" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;width:100%">
+                    <input type="text" id="adminName" placeholder="Ad Soyad" required style="flex:1 1 120px">
+                    <input type="email" id="adminEmail" placeholder="E-posta" required style="flex:1 1 180px">
+                    <input type="password" id="adminPassword" placeholder="Şifre" required style="flex:1 1 120px">
+                    <button type="submit" style="flex:0 0 auto">Admin Ekle</button>
+                    <span id="adminAddMsg" style="margin-left:10px;color:#2c3e50;flex:1 1 100px"></span>
+                  </form>
+                </div>
+                <ul class="user-list admin-list" id="adminList" style="margin-bottom:40px;margin-top:0;"></ul>
+                <!-- Admin Yönetimi Bitiş -->
+
+                <script>
+                  // Admin ekleme
+                  document.getElementById('adminAddForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('adminName').value.trim();
+                    const email = document.getElementById('adminEmail').value.trim();
+                    const password = document.getElementById('adminPassword').value;
+                    const msg = document.getElementById('adminAddMsg');
+                    msg.textContent = '';
+                    try {
+                      const res = await fetch('/api/admins', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email, password })
+                      });
+                      const data = await res.json();
+                      if (res.ok) {
+                        msg.style.color = 'green';
+                        msg.textContent = 'Admin başarıyla eklendi.';
+                        document.getElementById('adminAddForm').reset();
+                        loadAdmins();
+                      } else {
+                        msg.style.color = 'red';
+                        msg.textContent = data.error || 'Hata oluştu.';
+                      }
+                    } catch (err) {
+                      msg.style.color = 'red';
+                      msg.textContent = 'Sunucu hatası';
+                    }
+                  });
+
+                  // Adminleri yükle
+                  async function loadAdmins() {
+                    const list = document.getElementById('adminList');
+                    list.innerHTML = '<li class="user-item">Yükleniyor...</li>';
+                    try {
+                      const res = await fetch('/api/admins');
+                      if (!res.ok) throw new Error('Sunucu hatası');
+                      const admins = await res.json();
+                      if (!Array.isArray(admins) || admins.length === 0) {
+                        list.innerHTML = '<li class="user-item"><div class="info-message">Admin bulunamadı.</div></li>';
+                        return;
+                      }
+                      list.innerHTML = admins.map(a => `
+                        <li class="user-item">
+                          <span>${a.name} (${a.email})</span>
+                          <button class="delete-btn" onclick="deleteAdmin('${a._id}')">Sil</button>
+                        </li>
+                      `).join('');
+                    } catch (err) {
+                      list.innerHTML = '<li class="user-item"><div class="error">Adminler yüklenemedi.</div></li>';
+                    }
+                  }
+
+                  // Admin sil
+                  async function deleteAdmin(id) {
+                    if (!confirm('Bu admini silmek istediğinize emin misiniz?')) return;
+                    try {
+                      const res = await fetch('/api/admins/' + id, { method: 'DELETE' });
+                      if (res.ok) {
+                        loadAdmins();
+                      } else {
+                        alert('Silme işlemi başarısız.');
+                      }
+                    } catch (err) {
+                      alert('Sunucu hatası');
+                    }
+                  }
+
+                  // Sayfa yüklendiğinde adminleri getir
+                  document.addEventListener('DOMContentLoaded', function() {
+                    loadAdmins();
+                    window.deleteAdmin = deleteAdmin;
+                  });
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
