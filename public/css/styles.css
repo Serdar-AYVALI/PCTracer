@@ -269,603 +269,417 @@ body {
     gap: 20px;
 }
 
+/* Aktivite Takip Paneli - Filtre Bölümü optimize */
 .filter-section {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.data-section {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
-
-.stats-section {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.table-section {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    margin-top: 0;
-}
-
-.current-user {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 6px;
-    border-left: 4px solid #3498db;
-}
-
-.current-user h3 {
-    margin: 0;
-    font-size: 16px;
-    color: #333;
-}
-
-.filter-group {
-    margin-bottom: 20px;
-}
-
-.filter-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #555;
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-.form-control[multiple] {
-    height: 120px;
-}
-
-.filter-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.btn-apply, .btn-reset {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    flex: 1;
-}
-
-.btn-apply {
-    background-color: #3498db;
-    color: white;
-}
-
-.btn-apply:hover {
-    background-color: #2980b9;
-}
-
-.btn-reset {
-    background-color: #95a5a6;
-    color: white;
-}
-
-.btn-reset:hover {
-    background-color: #7f8c8d;
-}
-
-/* Grafik Stilleri */
-.chart-container {
-    margin-top: 15px;
-}
-
-.chart-bar {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.chart-bar .label {
-    width: 150px;
-    font-size: 14px;
-    color: #333;
-}
-
-.chart-bar .bar {
-    height: 20px;
-    background-color: #3498db;
-    border-radius: 4px;
-    transition: width 0.5s ease;
-    min-width: 10px;
-}
-
-.chart-bar .value {
-    margin-left: 10px;
-    font-size: 14px;
-    color: #7f8c8d;
-}
-
-/* Tablo Stilleri */
-.table-responsive {
-    overflow-x: auto;
-}
-
-.activity-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-.activity-table th, .activity-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.activity-table th {
-    background-color: #f8f9fa;
-    font-weight: 500;
-    color: #555;
-}
-
-.activity-table tr:hover {
-    background-color: #f5f5f5;
-}
-
-/* Mobil Uyumluluk */
-@media (max-width: 1024px) {
-    .activity-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .filter-section {
-        position: static;
-    }
-}
-
-@media (max-width: 768px) {
-    .navbar {
-        left: 100px; /* 80px -> 100px (80px + 20px padding) */
-    }
-
-    .sidebar {
-        width: 80px; /* 60px -> 80px */
-        padding: 10px;
-    }
-
-    .logo img {
-        height: 35px;
-    }
-
-    .main-content {
-        margin-left: 100px; /* 80px -> 100px (80px + 20px padding) */
-        margin-top: 236px;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    .nav-links a {
-        padding: 10px 0;
-        text-align: center;
-    }
-
-    .auth-buttons {
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 20px;
-        width: 100%;
-        justify-content: center;
-    }
-
-    .auth-buttons a {
-        width: 100%;
-        text-align: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .navbar {
-        padding: 5px 15px;
-    }
-
-    .nav-links {
-        gap: 10px;
-    }   
-
-    .auth-buttons a {
-        font-size: 12px;
-    }
-
-    .main-content {
-        margin-left: 100px; /* 80px -> 100px (80px + 20px padding) */
-        margin-top: 216px;
-    }
-}
-
-/* EKLENEN YENİ STİLLER */
-
-/* Kullanıcı listesi için ek stiller */
-.user-list li {
-    position: relative;
-}
-
-.user-list li .delete-btn {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    padding: 3px 8px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 12px;
-    margin-left: 10px;
-    transition: background 0.3s;
-}
-
-.user-list li .delete-btn:hover {
-    background: #c0392b;
-}
-
-/* Yükleme animasyonu */
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.loading-spinner {
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #3498db;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
-}
-
-/* Aktif menü öğesi */
-.nav-links a.active {
-    color: #3498db;
-    font-weight: bold;
-}
-
-/* Aktivite Takip Sayfası Stilleri */
-.activity-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.filter-section {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.data-section {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
-
-.stats-section {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.table-section {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    margin-top: 0;
-}
-
-.current-user {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 6px;
-    border-left: 4px solid #3498db;
-}
-
-.current-user h3 {
-    margin: 0;
-    font-size: 16px;
-    color: #333;
-}
-
-.filter-group {
-    margin-bottom: 20px;
-}
-
-.filter-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #555;
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-.form-control[multiple] {
-    height: 120px;
-}
-
-.filter-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.btn-apply, .btn-reset {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    flex: 1;
-}
-
-.btn-apply {
-    background-color: #3498db;
-    color: white;
-}
-
-.btn-apply:hover {
-    background-color: #2980b9;
-}
-
-.btn-reset {
-    background-color: #95a5a6;
-    color: white;
-}
-
-.btn-reset:hover {
-    background-color: #7f8c8d;
-}
-
-/* Grafik Stilleri */
-.chart-container {
-    margin-top: 15px;
-}
-
-.chart-bar {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.chart-bar .label {
-    width: 150px;
-    font-size: 14px;
-    color: #333;
-}
-
-.chart-bar .bar {
-    height: 20px;
-    background-color: #3498db;
-    border-radius: 4px;
-    transition: width 0.5s ease;
-    min-width: 10px;
-}
-
-.chart-bar .value {
-    margin-left: 10px;
-    font-size: 14px;
-    color: #7f8c8d;
-}
-
-/* Tablo Stilleri */
-.table-responsive {
-    overflow-x: auto;
-}
-
-.activity-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-.activity-table th, .activity-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.activity-table th {
-    background-color: #f8f9fa;
-    font-weight: 500;
-    color: #555;
-}
-
-.activity-table tr:hover {
-    background-color: #f5f5f5;
-}
-
-/* Mobil Uyumluluk */
-@media (max-width: 1024px) {
-    .activity-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .filter-section {
-        position: static;
-    }
-}
-
-@media (max-width: 768px) {
-    .navbar {
-        left: 100px; /* 80px -> 100px (80px + 20px padding) */
-    }
-
-    .sidebar {
-        width: 80px; /* 60px -> 80px */
-        padding: 10px;
-    }
-
-    .logo img {
-        height: 35px;
-    }
-
-    .main-content {
-        margin-left: 100px; /* 80px -> 100px (80px + 20px padding) */
-        margin-top: 236px;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    .nav-links a {
-        padding: 10px 0;
-        text-align: center;
-    }
-
-    .auth-buttons {
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 20px;
-        width: 100%;
-        justify-content: center;
-    }
-
-    .auth-buttons a {
-        width: 100%;
-        text-align: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .navbar {
-        padding: 5px 15px;
-    }
-
-    .nav-links {
-        gap: 10px;
-    }   
-
-    .auth-buttons a {
-        font-size: 12px;
-    }
-
-    .main-content {
-        margin-left: 100px; /* 80px -> 100px (80px + 20px padding) */
-        margin-top: 216px;
-    }
-}
-
-/* === ADMIN YÖNETİMİ STİLLERİ === */
-.admin-controls {
+    min-width: 240px;
+    max-width: 320px;
+    flex: 0 0 260px;
     background: #f8f9fa;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    padding: 16px 12px;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-size: 0.98em;
+}
+
+.filter-section h3 {
+    font-size: 1.1em;
+    margin-bottom: 12px;
+    color: #2c3e50;
+}
+
+.filter-section label {
+    font-size: 0.98em;
+    margin-bottom: 2px;
+    color: #333;
+}
+
+.filter-section .form-control,
+.filter-section select,
+.filter-section input[type="date"],
+.filter-section input[type="number"] {
+    font-size: 0.97em;
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-bottom: 0;
+}
+
+.filter-section select[multiple] {
+    min-height: 38px;
+    max-height: 70px;
+}
+
+.filter-section .filter-group {
+    margin-bottom: 12px;
+}
+
+.filter-section .filter-buttons {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.filter-section .btn-apply,
+.filter-section .btn-reset {
+    flex: 1;
+    padding: 7px 0;
+    font-size: 1em;
+}
+
+/* Aktivite Takip Paneli - Filtre Bölümü header sağında ve responsive */
+.activity-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
     flex-wrap: wrap;
 }
 
-.admin-controls input {
-    padding: 8px;
-    width: 120px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
+.activity-header .filter-section {
+    margin-left: auto;
+    min-width: 260px;
+    max-width: 340px;
+    flex: 0 0 320px;
+    padding: 14px 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
-.admin-controls input[type="email"] {
-    width: 180px;
+@media (max-width: 1100px) {
+    .activity-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .activity-header .filter-section {
+        margin-left: 0;
+        max-width: 100%;
+        width: 100%;
+    }
 }
 
-.admin-controls button {
-    padding: 8px 16px;
-    background: #3498db;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
-    font-size: 14px;
+@media (max-width: 700px) {
+    .activity-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .activity-header .filter-section {
+        margin-left: 0;
+        max-width: 100%;
+        width: 100%;
+    }
 }
 
-.admin-controls button:hover {
-    background: #2980b9;
+@media (max-width: 900px) {
+    .activity-layout {
+        flex-direction: column;
+    }
+    .filter-section {
+        max-width: 100%;
+        width: 100%;
+        margin-bottom: 18px;
+        flex: unset;
+    }
+    .data-section {
+        width: 100%;
+    }
 }
 
-.admin-controls #adminAddMsg {
-    margin-left: 10px;
-    color: #2c3e50;
-    min-width: 120px;
-    font-size: 14px;
+/* Filtre açılır/kapanır stilleri */
+.collapsible-filter .filter-header {
+    user-select: none;
+    transition: background 0.15s;
+}
+.collapsible-filter .filter-header:hover {
+    background: #ececec;
+}
+.collapsible-filter .filter-content {
+    transition: max-height 0.2s;
+    overflow: hidden;
 }
 
-.admin-list {
-    list-style: none;
-    padding: 0;
-    border: 1px solid #eee;
-    border-radius: 5px;
-    margin-bottom: 40px;
-    margin-top: 0;
+/* En Çok Kullanılan 5 Uygulama grafiği boyutu optimize */
+.top-apps canvas#top5AppsChartCanvas {
+    max-width: 320px;
+    height: 110px !important;
+    margin: 0 auto;
+    display: block;
+}
+.top-apps h4 {
+    font-size: 1.08em;
+    margin-bottom: 8px;
+}
+#top5AppsChartLegend {
+    font-size: 0.97em;
+    margin-top: 8px;
+    text-align: center;
 }
 
-.admin-list .user-item {
-    padding: 12px 15px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: none;
-    color: #2c3e50;
+/* Dışa Aktar Butonu Stil */
+.btn-export {
+    transition: background 0.2s, color 0.2s;
+    margin-left: 0;
+    margin-right: 0;
 }
 
-.admin-list .user-item:last-child {
-    border-bottom: none;
+/* Login-Signup ve Reset Password Stilleri */
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
 }
 
-.admin-list .delete-btn {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background 0.3s;
-    font-size: 12px;
-    margin-left: 10px;
+.login-form, .signup-form, .login-successful {
+  width: 400px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.admin-list .delete-btn:hover {
-    background: #c0392b;
+.reset-password-form {
+  width: 300px;
+  margin: 100px auto;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+.reset-password-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.reset-password-form p {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.reset-password-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+.reset-password-form input[type="text"],
+.reset-password-form input[type="email"],
+.reset-password-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.reset-password-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #462b92;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.reset-password-form button:hover {
+  background-color: #5c3eae;
+}
+.reset-password-form p a {
+  color: #462b92;
+  text-decoration: none;
+}
+.reset-password-form p a:hover {
+  text-decoration: underline;
+}
+
+.wrapper {
+  overflow: hidden;
+  max-width: 500px;
+  width: 100%;
+  max-height: 500px;
+  height: auto;
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 25px;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+}
+.wrapper .title-text {
+  display: flex;
+  width: 200%;
+}
+.wrapper .title {
+  width: 50%;
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.wrapper .slide-controls {
+  position: relative;
+  display: flex;
+  height: 50px;
+  width: 100%;
+  overflow: hidden;
+  margin: 30px 0 10px 0;
+  justify-content: space-between;
+  border: 1px solid lightgrey;
+  border-radius: 15px;
+}
+.slide-controls .slide {
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 48px;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.6s ease;
+}
+.slide-controls label.signup {
+  color: #000;
+}
+.slide-controls .slider-tab {
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  left: 0;
+  z-index: 0;
+  border-radius: 15px;
+  background: -webkit-linear-gradient(left, #462b92, #5c3eae, #7a61d4);
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+input[type="radio"] {
+  display: none;
+}
+#signup:checked ~ .slider-tab {
+  left: 50%;
+}
+#signup:checked ~ label.signup {
+  color: #fff;
+  cursor: default;
+  user-select: none;
+}
+#signup:checked ~ label.login {
+  color: #000;
+}
+#login:checked ~ label.signup {
+  color: #000;
+}
+#login:checked ~ label.login {
+  cursor: default;
+  user-select: none;
+}
+.wrapper .form-container {
+  width: 100%;
+  overflow: hidden;
+}
+.form-container .form-inner {
+  display: flex;
+  width: 200%;
+}
+.form-container .form-inner form {
+  width: 50%;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.form-inner form .field {
+  height: 50px;
+  width: 100%;
+  margin-top: 20px;
+}
+.form-inner form .field input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding-left: 15px;
+  border-radius: 15px;
+  border: 1px solid lightgrey;
+  border-bottom-width: 2px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+.form-inner form .field input:focus {
+  border-color: #462b92;
+}
+.form-inner form .field input::placeholder {
+  color: #999;
+  transition: all 0.3s ease;
+}
+form .field input:focus::placeholder {
+  color: #462b92;
+}
+.form-inner form .pass-link {
+  margin-top: 5px;
+}
+.form-inner form .signup-link {
+  text-align: center;
+  margin-top: 30px;
+}
+.form-inner form .pass-link a,
+.form-inner form .signup-link a {
+  color: #462b92;
+  text-decoration: none;
+}
+.form-inner form .pass-link a:hover,
+.form-inner form .signup-link a:hover {
+  text-decoration: underline;
+}
+form .btn {
+  height: 55px;
+  width: 100%;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+}
+form .btn .btn-layer {
+  height: 100%;
+  width: 300%;
+  position: absolute;
+  left: -100%;
+  background: -webkit-linear-gradient(right, #462b92, #5c3eae, #7a61d4);
+  border-radius: 15px;
+  transition: all 0.4s ease;
+}
+form .btn:hover .btn-layer {
+  left: 0;
+}
+form .btn input[type="submit"] {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+  background: none;
+  border: none;
+  color: #fff;
+  padding-left: 0;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+::selection {
+  background: #462b92;
+  color: #fff;
 }

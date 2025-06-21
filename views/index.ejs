@@ -96,84 +96,97 @@
                 <% if (typeof userName !== 'undefined' && userName) { %>
                   <p style="font-size:1.2em;font-weight:bold;">Merhaba <%= userName %>!</p>
                 <% } %>
-                <p>Bu alanda gösterge paneli içeriği yer alacak.</p>
+                <!-- Birim filtresi -->
+                <div style="margin-bottom:14px;">
+                  <label for="unitFilter" style="font-weight:500;">Birim:</label>
+                  <select id="unitFilter" style="margin-left:8px;">
+                    <option value="second">Saniye</option>
+                    <option value="minute">Dakika</option>
+                    <option value="hour">Saat</option>
+                    <option value="day">Gün</option>
+                  </select>
+                </div>
+
+                <!-- Grafik Seçimi -->
+                <div style="margin-bottom:18px;">
+                  <label style="font-weight:500;font-size:1.08em;">Gösterilecek Grafikler:</label>
+                  <div id="chartSelector" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;">
+                    <label><input type="checkbox" class="chart-toggle" value="pie-app-time" checked> Pasta (Uygulama Zaman)</label>
+                    <label><input type="checkbox" class="chart-toggle" value="bar-app-usage"> Çubuk (Kullanım Süresi)</label>
+                    <label><input type="checkbox" class="chart-toggle" value="timeline-activity"> Zaman Serisi</label>
+                    <label><input type="checkbox" class="chart-toggle" value="area-app-flow"> Alan Grafiği</label>
+                    <label><input type="checkbox" class="chart-toggle" value="heatmap-hourly-activity"> Isı Haritası</label>
+                    <label><input type="checkbox" class="chart-toggle" value="calendar-heatmap"> Takvim Isı Haritası</label>
+                    <label><input type="checkbox" class="chart-toggle" value="sankey-app-flow"> Sankey Diyagramı</label>
+                    <label><input type="checkbox" class="chart-toggle" value="stackedbar-user-app"> Stacked Bar</label>
+                    <label><input type="checkbox" class="chart-toggle" value="radar-user-activity"> Radar</label>
+                    <label><input type="checkbox" class="chart-toggle" value="polar-area-app-usage"> Polar Alan</label>
+                    <label><input type="checkbox" class="chart-toggle" value="boxplot-daily-activity"> Box Plot</label>
+                    <label><input type="checkbox" class="chart-toggle" value="violin-app-usage"> Violin</label>
+                  </div>
+                </div>
 
                 <!-- Grafikler Başlangıç -->
                 <div class="dashboard-charts">
 
                   <div class="chart-section">
                     <h3>1. Pasta Grafiği – Uygulama Bazlı Zaman Dağılımı</h3>
-                    <canvas id="pie-app-time" width="400" height="250"></canvas>
+                    <canvas id="pie-app-time"></canvas>
                   </div>
 
                   <div class="chart-section">
                     <h3>2. Çubuk Grafiği – Uygulamalara Göre Kullanım Süresi</h3>
-                    <canvas id="bar-app-usage" width="400" height="250"></canvas>
+                    <canvas id="bar-app-usage"></canvas>
                   </div>
 
                   <div class="chart-section">
                     <h3>3. Zaman Serisi Grafiği – Günlük Aktivite Zaman Çizelgesi</h3>
-                    <canvas id="timeline-activity" width="400" height="250"></canvas>
+                    <canvas id="timeline-activity"></canvas>
                   </div>
 
                   <div class="chart-section">
                     <h3>4. Alan Grafiği – Uygulama Kullanımı Zaman Akışı</h3>
-                    <canvas id="area-app-flow" width="400" height="250"></canvas>
+                    <canvas id="area-app-flow"></canvas>
                   </div>
 
                   <div class="chart-section">
                     <h3>5. Isı Haritası – Günün Saatlerine Göre Aktivite Yoğunluğu</h3>
-                    <canvas id="heatmap-hourly-activity" width="400" height="250"></canvas>
+                    <canvas id="heatmap-hourly-activity"></canvas>
                   </div>
 
                   <div class="chart-section">
-                    <h3>6. Donut Grafiği – Boşta Geçen Süre Oranı</h3>
-                    <canvas id="donut-idle-ratio" width="400" height="250"></canvas>
+                    <h3>6. Kare Kodlu Aktivite Takvimi (Calendar Heatmap)</h3>
+                    <canvas id="calendar-heatmap"></canvas>
                   </div>
 
                   <div class="chart-section">
-                    <h3>7. Kare Kodlu Aktivite Takvimi (Calendar Heatmap)</h3>
-                    <canvas id="calendar-heatmap" width="400" height="250"></canvas>
+                    <h3>7. Sankey Diyagramı – Uygulama Geçiş Akışı</h3>
+                    <canvas id="sankey-app-flow"></canvas>
                   </div>
 
                   <div class="chart-section">
-                    <h3>8. Sankey Diyagramı – Uygulama Geçiş Akışı</h3>
-                    <canvas id="sankey-app-flow" width="400" height="250"></canvas>
+                    <h3>8. Stacked Bar Chart – Birden Fazla Kullanıcıya Göre Uygulama Kullanımı</h3>
+                    <canvas id="stackedbar-user-app"></canvas>
                   </div>
 
                   <div class="chart-section">
-                    <h3>9. Stacked Bar Chart – Birden Fazla Kullanıcıya Göre Uygulama Kullanımı</h3>
-                    <canvas id="stackedbar-user-app" width="400" height="250"></canvas>
+                    <h3>9. Radar Grafiği – Kullanıcı Aktivite Profili</h3>
+                    <canvas id="radar-user-activity"></canvas>
                   </div>
 
                   <div class="chart-section">
-                    <h3>10. Radar Grafiği – Kullanıcı Aktivite Profili</h3>
-                    <canvas id="radar-user-activity" width="400" height="250"></canvas>
+                    <h3>10. Polar Alan Grafiği – Uygulama Kullanım Yoğunluğu</h3>
+                    <canvas id="polar-area-app-usage"></canvas>
                   </div>
 
                   <div class="chart-section">
-                    <h3>11. Polar Alan Grafiği – Uygulama Kullanım Yoğunluğu</h3>
-                    <canvas id="polar-area-app-usage" width="400" height="250"></canvas>
+                    <h3>11. Box Plot Grafiği – Günlük Aktivite Dağılımı</h3>
+                    <canvas id="boxplot-daily-activity"></canvas>
                   </div>
 
                   <div class="chart-section">
-                    <h3>12. Box Plot Grafiği – Günlük Aktivite Dağılımı</h3>
-                    <canvas id="boxplot-daily-activity" width="400" height="250"></canvas>
-                  </div>
-
-                  <div class="chart-section">
-                    <h3>13. Violin Grafiği – Uygulama Kullanımının Dağılımı</h3>
-                    <canvas id="violin-app-usage" width="400" height="250"></canvas>
-                  </div>
-
-                  <div class="chart-section">
-                    <h3>14. Histogram Grafiği – Aktivite Seviyeleri Dağılımı</h3>
-                    <canvas id="histogram-activity-levels" width="400" height="250"></canvas>
-                  </div>
-
-                  <div class="chart-section">
-                    <h3>15. Dağılım Grafiği – Uygulama Kullanım Dağılımı</h3>
-                    <canvas id="scatter-app-usage" width="400" height="250"></canvas>
+                    <h3>12. Violin Grafiği – Uygulama Kullanımının Dağılımı</h3>
+                    <canvas id="violin-app-usage"></canvas>
                   </div>
 
                 </div>
@@ -185,353 +198,394 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-    // 1. Pie Chart - Uygulama Bazlı Zaman Dağılımı
-    fetch('/api/chart/pie-app-time')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('pie-app-time').getContext('2d');
-        new Chart(ctx, {
-          type: 'pie',
-          data: {
-            labels: data.map(d => d._id),
-            datasets: [{
-              data: data.map(d => d.total),
-              backgroundColor: [
-                '#FF6384', '#36A2EB', '#FFCE56', '#8BC34A', '#FF9800', '#9C27B0', '#00BCD4'
-              ]
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { position: 'bottom' } }
-          }
-        });
-      });
-
-    // 2. Bar Chart - Uygulamalara Göre Kullanım Süresi
-    fetch('/api/chart/bar-app-usage')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('bar-app-usage').getContext('2d');
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: data.map(d => d._id),
-            datasets: [{
-              label: 'Kullanım Süresi (sn)',
-              data: data.map(d => d.total),
-              backgroundColor: '#36A2EB'
-            }]
-          },
-          options: {
-            responsive: true,
-            indexAxis: 'y',
-            plugins: { legend: { display: false } },
-            scales: {
-              x: { beginAtZero: true }
+    let currentUnit = 'second';
+    document.getElementById('unitFilter').addEventListener('change', function() {
+      currentUnit = this.value;
+      window.updateAllCharts && window.updateAllCharts();
+    });
+    function destroyChart(ref) {
+      if (window[ref]) { window[ref].destroy(); window[ref] = null; }
+    }
+    function convertUnit(val) {
+      if (currentUnit === 'minute') return (val/60).toFixed(2);
+      if (currentUnit === 'hour') return (val/3600).toFixed(2);
+      if (currentUnit === 'day') return (val/86400).toFixed(2);
+      return val;
+    }
+    function updateAllCharts() {
+      // 1. Pie Chart
+      fetch('/api/chart/pie-app-time')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('pieAppTimeChart');
+          const ctx = document.getElementById('pie-app-time').getContext('2d');
+          window.pieAppTimeChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: data.map(d => d._id),
+              datasets: [{
+                data: data.map(d => convertUnit(d.total)),
+                backgroundColor: [
+                  '#FF6384', '#36A2EB', '#FFCE56', '#8BC34A', '#FF9800', '#9C27B0', '#00BCD4'
+                ]
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { position: 'bottom' } }
             }
-          }
+          });
         });
-      });
-
-    // 3. Zaman Serisi Grafiği – Günlük Aktivite Zaman Çizelgesi
-    fetch('/api/chart/timeline-activity')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('timeline-activity').getContext('2d');
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: data.map(d => d.start_time),
-            datasets: [{
-              label: 'Aktivite',
-              data: data.map((d, i) => i + 1),
-              borderColor: '#FF9800',
-              fill: false
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { display: false } }
-          }
-        });
-      });
-
-    // 4. Alan Grafiği – Uygulama Kullanımı Zaman Akışı
-    fetch('/api/chart/area-app-flow')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('area-app-flow').getContext('2d');
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: data.map(d => d.start_time),
-            datasets: [{
-              label: 'Süre',
-              data: data.map(d => d.duration_seconds),
-              backgroundColor: 'rgba(54,162,235,0.2)',
-              borderColor: '#36A2EB',
-              fill: true
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { display: false } }
-          }
-        });
-      });
-
-    // 5. Isı Haritası – Günün Saatlerine Göre Aktivite Yoğunluğu (örnek: bar chart)
-    fetch('/api/chart/heatmap-hourly-activity')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('heatmap-hourly-activity').getContext('2d');
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: data.map(d => `Gün:${d._id.day} Saat:${d._id.hour}`),
-            datasets: [{
-              label: 'Toplam Süre',
-              data: data.map(d => d.total),
-              backgroundColor: '#FF6384'
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { display: false } }
-          }
-        });
-      });
-
-    // 6. Donut Grafiği – Boşta Geçen Süre Oranı
-    fetch('/api/chart/donut-idle-ratio')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('donut-idle-ratio').getContext('2d');
-        new Chart(ctx, {
-          type: 'doughnut',
-          data: {
-            labels: data.map(d => d._id),
-            datasets: [{
-              data: data.map(d => d.total),
-              backgroundColor: ['#FF6384', '#36A2EB']
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { position: 'bottom' } }
-          }
-        });
-      });
-
-    // 7. Calendar Heatmap – Gün Bazlı Toplam Kullanım Süresi (örnek: bar chart)
-    fetch('/api/chart/calendar-heatmap')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('calendar-heatmap').getContext('2d');
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: data.map(d => d._id),
-            datasets: [{
-              label: 'Toplam Süre',
-              data: data.map(d => d.total),
-              backgroundColor: '#8BC34A'
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { display: false } }
-          }
-        });
-      });
-
-    // 8. Sankey Diyagramı – Uygulama Geçiş Akışı (örnek: bar chart)
-    fetch('/api/chart/sankey-app-flow')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('sankey-app-flow').getContext('2d');
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: data.map(d => `${d.from} → ${d.to}`),
-            datasets: [{
-              label: 'Geçiş Sayısı',
-              data: data.map(d => d.count),
-              backgroundColor: '#9C27B0'
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { display: false } }
-          }
-        });
-      });
-
-    // 9. Stacked Bar Chart – Birden Fazla Kullanıcıya Göre Uygulama Kullanımı
-    fetch('/api/chart/stackedbar-user-app')
-      .then(res => res.json())
-      .then(data => {
-        // Gruplama: kullanıcı başına uygulama
-        const users = [...new Set(data.map(d => d._id.user))];
-        const apps = [...new Set(data.map(d => d._id.app))];
-        const datasets = apps.map(app => ({
-          label: app,
-          data: users.map(user => {
-            const found = data.find(d => d._id.user === user && d._id.app === app);
-            return found ? found.total : 0;
-          }),
-          backgroundColor: '#' + Math.floor(Math.random()*16777215).toString(16)
-        }));
-        const ctx = document.getElementById('stackedbar-user-app').getContext('2d');
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: users,
-            datasets: datasets
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { position: 'bottom' } },
-            scales: {
-              x: { stacked: true },
-              y: { stacked: true }
+      // 2. Bar Chart
+      fetch('/api/chart/bar-app-usage')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('barAppUsageChart');
+          const ctx = document.getElementById('bar-app-usage').getContext('2d');
+          window.barAppUsageChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.map(d => d._id),
+              datasets: [{
+                label: currentUnit === 'minute' ? 'Kullanım Süresi (dk)' : currentUnit === 'hour' ? 'Kullanım Süresi (sa)' : currentUnit === 'day' ? 'Kullanım Süresi (gün)' : 'Kullanım Süresi (sn)',
+                data: data.map(d => convertUnit(d.total)),
+                backgroundColor: '#36A2EB'
+              }]
+            },
+            options: {
+              responsive: true,
+              indexAxis: 'y',
+              plugins: { legend: { display: false } },
+              scales: {
+                x: { beginAtZero: true }
+              }
             }
-          }
+          });
         });
-      });
+      // 3. Zaman Serisi Grafiği – Günlük Aktivite Zaman Çizelgesi
+      fetch('/api/chart/timeline-activity')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('timelineActivityChart');
+          const ctx = document.getElementById('timeline-activity').getContext('2d');
+          window.timelineActivityChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: data.map(d => d.start_time),
+              datasets: [{
+                label: 'Aktivite',
+                data: data.map((d, i) => i + 1),
+                borderColor: '#FF9800',
+                fill: false
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false } }
+            }
+          });
+        });
 
-    // 10. Line Chart – Günlük Ortalama Oturum Süresi
-    fetch('/api/chart/line-daily-session')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('radar-user-activity').getContext('2d');
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: data.map(d => d._id),
-            datasets: [{
-              label: 'Ortalama Oturum Süresi',
-              data: data.map(d => d.total),
-              borderColor: '#00BCD4',
-              fill: false
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { display: false } }
-          }
+      // 4. Alan Grafiği – Uygulama Kullanımı Zaman Akışı
+      fetch('/api/chart/area-app-flow')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('areaAppFlowChart');
+          const ctx = document.getElementById('area-app-flow').getContext('2d');
+          window.areaAppFlowChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: data.map(d => d.start_time),
+              datasets: [{
+                label: 'Süre',
+                data: data.map(d => convertUnit(d.duration_seconds)),
+                backgroundColor: 'rgba(54,162,235,0.2)',
+                borderColor: '#36A2EB',
+                fill: true
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false } }
+            }
+          });
         });
-      });
 
-    // 11. Polar Area Chart – Uygulama Kullanım Yoğunluğu (örnek)
-    fetch('/api/chart/bar-app-usage')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('polar-area-app-usage').getContext('2d');
-        new Chart(ctx, {
-          type: 'polarArea',
-          data: {
-            labels: data.map(d => d._id),
-            datasets: [{
-              data: data.map(d => d.total),
-              backgroundColor: [
-                '#FF6384', '#36A2EB', '#FFCE56', '#8BC34A', '#FF9800', '#9C27B0', '#00BCD4'
-              ]
-            }]
-          },
-          options: {
-            responsive: true
-          }
+      // 5. Isı Haritası – Günün Saatlerine Göre Aktivite Yoğunluğu (örnek: bar chart)
+      fetch('/api/chart/heatmap-hourly-activity')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('heatmapHourlyActivityChart');
+          const ctx = document.getElementById('heatmap-hourly-activity').getContext('2d');
+          window.heatmapHourlyActivityChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.map(d => `Gün:${d._id.day} Saat:${d._id.hour}`),
+              datasets: [{
+                label: currentUnit === 'minute' ? 'Toplam Süre (dk)' : 'Toplam Süre (sn)',
+                data: data.map(d => convertUnit(d.total)),
+                backgroundColor: '#FF6384'
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false } }
+            }
+          });
         });
-      });
 
-    // 12. Box Plot Grafiği – Günlük Aktivite Dağılımı (örnek: bar chart)
-    fetch('/api/chart/calendar-heatmap')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('boxplot-daily-activity').getContext('2d');
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: data.map(d => d._id),
-            datasets: [{
-              label: 'Günlük Aktivite',
-              data: data.map(d => d.total),
-              backgroundColor: '#FFCE56'
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { display: false } }
-          }
+      // 6. Donut Grafiği – Boşta Geçen Süre Oranı
+      fetch('/api/chart/donut-idle-ratio')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('donutIdleRatioChart');
+          const ctx = document.getElementById('donut-idle-ratio').getContext('2d');
+          window.donutIdleRatioChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: data.map(d => d._id),
+              datasets: [{
+                data: data.map(d => d.total),
+                backgroundColor: ['#FF6384', '#36A2EB']
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { position: 'bottom' } }
+            }
+          });
         });
-      });
 
-    // 13. Violin Grafiği – Uygulama Kullanımının Dağılımı (örnek: bar chart)
-    fetch('/api/chart/bar-app-usage')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('violin-app-usage').getContext('2d');
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: data.map(d => d._id),
-            datasets: [{
-              label: 'Kullanım Dağılımı',
-              data: data.map(d => d.total),
-              backgroundColor: '#8BC34A'
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { display: false } }
-          }
+      // 7. Calendar Heatmap – Gün Bazlı Toplam Kullanım Süresi (örnek: bar chart)
+      fetch('/api/chart/calendar-heatmap')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('calendarHeatmapChart');
+          const ctx = document.getElementById('calendar-heatmap').getContext('2d');
+          window.calendarHeatmapChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.map(d => d._id),
+              datasets: [{
+                label: currentUnit === 'minute' ? 'Toplam Süre (dk)' : 'Toplam Süre (sn)',
+                data: data.map(d => convertUnit(d.total)),
+                backgroundColor: '#8BC34A'
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false } }
+            }
+          });
         });
-      });
 
-    // 14. Histogram Grafiği – Aktivite Seviyeleri Dağılımı (örnek: bar chart)
-    fetch('/api/chart/bar-app-usage')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('histogram-activity-levels').getContext('2d');
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: data.map(d => d._id),
-            datasets: [{
-              label: 'Aktivite Seviyesi',
-              data: data.map(d => d.total),
-              backgroundColor: '#FF9800'
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { display: false } }
-          }
+      // 8. Sankey Diyagramı – Uygulama Geçiş Akışı (örnek: bar chart)
+      fetch('/api/chart/sankey-app-flow')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('sankeyAppFlowChart');
+          const ctx = document.getElementById('sankey-app-flow').getContext('2d');
+          window.sankeyAppFlowChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.map(d => `${d.from} → ${d.to}`),
+              datasets: [{
+                label: 'Geçiş Sayısı',
+                data: data.map(d => d.count),
+                backgroundColor: '#9C27B0'
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false } }
+            }
+          });
         });
-      });
 
-    // 15. Dağılım Grafiği – Uygulama Kullanım Dağılımı (örnek: scatter)
-    fetch('/api/chart/bar-app-usage')
-      .then(res => res.json())
-      .then(data => {
-        const ctx = document.getElementById('scatter-app-usage').getContext('2d');
-        new Chart(ctx, {
-          type: 'scatter',
-          data: {
-            datasets: [{
-              label: 'Kullanım Dağılımı',
-              data: data.map((d, i) => ({ x: i, y: d.total })),
-              backgroundColor: '#36A2EB'
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: { legend: { display: false } }
-          }
+      // 9. Stacked Bar Chart – Birden Fazla Kullanıcıya Göre Uygulama Kullanımı
+      fetch('/api/chart/stackedbar-user-app')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('stackedbarUserAppChart');
+          const users = [...new Set(data.map(d => d._id.user))];
+          const apps = [...new Set(data.map(d => d._id.app))];
+          const datasets = apps.map(app => ({
+            label: app,
+            data: users.map(user => {
+              const found = data.find(d => d._id.user === user && d._id.app === app);
+              return found ? (currentUnit === 'minute' ? (found.total/60).toFixed(2) : found.total) : 0;
+            }),
+            backgroundColor: '#' + Math.floor(Math.random()*16777215).toString(16)
+          }));
+          const ctx = document.getElementById('stackedbar-user-app').getContext('2d');
+          window.stackedbarUserAppChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: users,
+              datasets: datasets
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { position: 'bottom' } },
+              scales: {
+                x: { stacked: true },
+                y: { stacked: true }
+              }
+            }
+          });
         });
+
+      // 10. Radar Grafiği – Kullanıcı Aktivite Profili
+      fetch('/api/chart/line-daily-session')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('radarUserActivityChart');
+          const ctx = document.getElementById('radar-user-activity').getContext('2d');
+          window.radarUserActivityChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: data.map(d => d._id),
+              datasets: [{
+                label: currentUnit === 'minute' ? 'Ortalama Oturum Süresi (dk)' : 'Ortalama Oturum Süresi (sn)',
+                data: data.map(d => convertUnit(d.total)),
+                borderColor: '#00BCD4',
+                fill: false
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false } }
+            }
+          });
+        });
+      // 11. Polar Area Grafiği – Uygulama Kullanım Yoğunluğu (örnek)
+      fetch('/api/chart/bar-app-usage')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('polarAreaAppUsageChart');
+          const ctx = document.getElementById('polar-area-app-usage').getContext('2d');
+          window.polarAreaAppUsageChart = new Chart(ctx, {
+            type: 'polarArea',
+            data: {
+              labels: data.map(d => d._id),
+              datasets: [{
+                data: data.map(d => convertUnit(d.total)),
+                backgroundColor: [
+                  '#FF6384', '#36A2EB', '#FFCE56', '#8BC34A', '#FF9800', '#9C27B0', '#00BCD4'
+                ]
+              }]
+            },
+            options: {
+              responsive: true
+            }
+          });
+        });
+
+      // 12. Box Plot Grafiği – Günlük Aktivite Dağılımı (örnek: bar chart)
+      fetch('/api/chart/calendar-heatmap')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('boxplotDailyActivityChart');
+          const ctx = document.getElementById('boxplot-daily-activity').getContext('2d');
+          window.boxplotDailyActivityChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.map(d => d._id),
+              datasets: [{
+                label: currentUnit === 'minute' ? 'Günlük Aktivite (dk)' : 'Günlük Aktivite (sn)',
+                data: data.map(d => convertUnit(d.total)),
+                backgroundColor: '#FFCE56'
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false } }
+            }
+          });
+        });
+
+      // 13. Violin Grafiği – Uygulama Kullanımının Dağılımı (örnek: bar chart)
+      fetch('/api/chart/bar-app-usage')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('violinAppUsageChart');
+          const ctx = document.getElementById('violin-app-usage').getContext('2d');
+          window.violinAppUsageChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.map(d => d._id),
+              datasets: [{
+                label: currentUnit === 'minute' ? 'Kullanım Dağılımı (dk)' : 'Kullanım Dağılımı (sn)',
+                data: data.map(d => convertUnit(d.total)),
+                backgroundColor: '#8BC34A'
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false } }
+            }
+          });
+        });
+
+      // 14. Histogram Grafiği – Aktivite Seviyeleri Dağılımı (örnek: bar chart)
+      fetch('/api/chart/bar-app-usage')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('histogramActivityLevelsChart');
+          const ctx = document.getElementById('histogram-activity-levels').getContext('2d');
+          window.histogramActivityLevelsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.map(d => d._id),
+              datasets: [{
+                label: currentUnit === 'minute' ? 'Aktivite Seviyesi (dk)' : 'Aktivite Seviyesi (sn)',
+                data: data.map(d => convertUnit(d.total)),
+                backgroundColor: '#FF9800'
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false } }
+            }
+          });
+        });
+
+      // 15. Dağılım Grafiği – Uygulama Kullanım Dağılımı (örnek: scatter)
+      fetch('/api/chart/bar-app-usage')
+        .then(res => res.json())
+        .then(data => {
+          destroyChart('scatterAppUsageChart');
+          const ctx = document.getElementById('scatter-app-usage').getContext('2d');
+          window.scatterAppUsageChart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+              datasets: [{
+                label: currentUnit === 'minute' ? 'Kullanım Dağılımı (dk)' : 'Kullanım Dağılımı (sn)',
+                data: data.map((d, i) => ({ x: i, y: convertUnit(d.total) })),
+                backgroundColor: '#36A2EB'
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false } }
+            }
+          });
+        });
+
+      // Grafik seçimi ile göster/gizle
+      const chartToggles = document.querySelectorAll('.chart-toggle');
+      chartToggles.forEach(cb => {
+        cb.addEventListener('change', function() {
+          const section = document.getElementById(cb.value)?.closest('.chart-section');
+          if (section) section.style.display = cb.checked ? '' : 'none';
+        });
+        // Sayfa yüklenirken ilk durumu uygula
+        const section = document.getElementById(cb.value)?.closest('.chart-section');
+        if (section) section.style.display = cb.checked ? '' : 'none';
       });
+    }
+    window.updateAllCharts = updateAllCharts;
+    updateAllCharts();
     </script>
     <script src="/app.js"></script>
 </body>

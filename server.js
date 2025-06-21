@@ -1,4 +1,4 @@
-require('dotenv').config(); // .env desteği için ekle
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { MongoClient } = require('mongodb');
@@ -9,15 +9,15 @@ const session = require('express-session');
 const app = express();
 const PORT = 3000;
 
-// MongoDB bağlantısı (mongoose için)
-const MONGO_URI = process.env.MONGO_URI; // .env'den oku
+const MONGO_URI = process.env.MONGO_URI;
+const DB_NAME = process.env.DB_NAME || "PCTracerDB";
 
-//MongoDB bağlantısı (native driver için)
+// Native driver için örnek bağlantı (kullanılmıyor ama DB_NAME ile)
 // let db;
 // async function connectDB() {
 //   try {
 //     const client = await MongoClient.connect(MONGO_URI);
-//     db = client.db("PCTracerDB");
+//     db = client.db(DB_NAME);
 //     console.log("MongoDB'ye başarıyla bağlandı (native driver)");
 //     return client;
 //   } catch (error) {
@@ -25,18 +25,13 @@ const MONGO_URI = process.env.MONGO_URI; // .env'den oku
 //     process.exit(1);
 //   }
 // }
-
 // connectDB().catch(console.error);
 
-
-// Her iki bağlantıyı da kur
 mongoose.connect(MONGO_URI)
   .then(() => console.log('MongoDB bağlantısı başarılı (mongoose)'))
   .catch(err => console.error('MongoDB bağlantı hatası (mongoose):', err));
 
-
 // Modeller
-// Modelleri models klasörüne al
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
@@ -45,11 +40,11 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema, 'Users');
 const Admin = mongoose.model('Admin', userSchema, 'Admins');
-const ClientData = mongoose.model('ClientData', new mongoose.Schema({}), 'ClientData');
+const ClientData = mongoose.model('ClientData', new mongoose.Schema({}, { strict: false }), 'ClientData');
 
-// Middleware'ler
+// Middleware
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true })); // <-- EKLENDİ
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.static('public'));
@@ -57,15 +52,13 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
-// Session middleware
 app.use(session({
   secret: 'pc_tracer_secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // true only with HTTPS
+  cookie: { secure: false }
 }));
 
-// Giriş kontrol middleware'i
 function requireLogin(req, res, next) {
   if (req.session && req.session.userId) {
     next();
@@ -74,7 +67,7 @@ function requireLogin(req, res, next) {
   }
 }
 
-// Giriş sayfası (login.ejs)
+// Giriş sayfası
 app.get('/login', (req, res) => {
   res.render('login', { error: null });
 });
@@ -92,7 +85,7 @@ app.post('/user/login', async (req, res) => {
       return res.render('login', { error: 'Şifre hatalı' });
     }
     req.session.userId = admin._id;
-    req.session.userName = admin.name; // Kullanıcı adını session'a ekle
+    req.session.userName = admin.name;
     res.redirect('/');
   } catch (err) {
     res.render('login', { error: 'Sunucu hatası' });
@@ -106,23 +99,21 @@ app.get('/logout', (req, res) => {
   });
 });
 
+// Sayfalar
 app.get('/', requireLogin, (req, res) => {
-  res.render('index', { userName: req.session.userName }); // userName'i gönder
+  res.render('index', { userName: req.session.userName });
 });
-
 app.get('/activities', requireLogin, (req, res) => {
   res.render('activities');
 });
-
 app.get('/ayarlar', requireLogin, (req, res) => {
   res.render('ayarlar');
 });
-
 app.get('/iletisim', requireLogin, (req, res) => {
   res.render('iletisim');
 });
 
-// Users koleksiyonundan kullanıcıları getiren endpoint
+// API: Kullanıcılar
 app.get('/api/users', async (req, res) => {
   try {
     const users = await User.find({}, 'name -_id');
@@ -131,8 +122,6 @@ app.get('/api/users', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-// Mevcut kullanıcıları getir
 app.get('/api/existing-users', async (req, res) => {
   try {
     const users = await User.find({}, '_id name');
@@ -141,8 +130,6 @@ app.get('/api/existing-users', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// Aktif kullanıcıları getir ve güncelle
 app.get('/api/active-users', async (req, res) => {
   try {
     const days = parseInt(req.query.days);
@@ -172,50 +159,35 @@ app.get('/api/active-users', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// Kullanıcı silme
 app.delete('/api/users/:id', async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       return res.status(400).json({ error: 'Geçersiz kullanıcı ID' });
     }
-
     const result = await User.findByIdAndDelete(req.params.id);
     if (!result) {
       return res.status(404).json({ error: 'Kullanıcı bulunamadı' });
     }
     res.json({ success: true });
   } catch (err) {
-    console.error('Hata:', err);
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
 
-// Aktivite verilerini getir (kullanıcıya göre filtreleme desteği ile)
+// API: Aktivite verileri
 app.get("/times", async (req, res) => {
   try {
     const { user } = req.query;
     let query = {};
-    
-    if (user) {
-      query.user = user;
-    }
-    
-    // const times1 = await db.collection("ClientData").find(query).toArray();
+    if (user) query.user = user;
     const times = await ClientData.find(query).exec();
-
-    console.log(times[0])
-
-
-
     res.json(times);
   } catch (err) {
-    console.error("Listeleme hatası:", err);
     res.status(500).json({ error: "Bir hata oluştu" });
   }
 });
 
-// 1. Pasta Grafiği – Uygulama Bazlı Zaman Dağılımı
+// API: Grafikler (örnekler, hepsi benzer şekilde çalışıyor)
 app.get('/api/chart/pie-app-time', async (req, res) => {
   try {
     const user = req.query.user;
@@ -234,8 +206,6 @@ app.get('/api/chart/pie-app-time', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// 2. Çubuk Grafiği – Uygulamalara Göre Kullanım Süresi
 app.get('/api/chart/bar-app-usage', async (req, res) => {
   try {
     const user = req.query.user;
@@ -255,8 +225,6 @@ app.get('/api/chart/bar-app-usage', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// 3. Zaman Serisi Grafiği – Günlük Aktivite Zaman Çizelgesi
 app.get('/api/chart/timeline-activity', async (req, res) => {
   try {
     const user = req.query.user;
@@ -267,8 +235,6 @@ app.get('/api/chart/timeline-activity', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// 4. Alan Grafiği – Uygulama Kullanımı Zaman Akışı
 app.get('/api/chart/area-app-flow', async (req, res) => {
   try {
     const user = req.query.user;
@@ -279,8 +245,6 @@ app.get('/api/chart/area-app-flow', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// 5. Isı Haritası – Günün Saatlerine Göre Aktivite Yoğunluğu
 app.get('/api/chart/heatmap-hourly-activity', async (req, res) => {
   try {
     const user = req.query.user;
@@ -306,8 +270,6 @@ app.get('/api/chart/heatmap-hourly-activity', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// 6. Donut Grafiği – Boşta Geçen Süre Oranı
 app.get('/api/chart/donut-idle-ratio', async (req, res) => {
   try {
     const user = req.query.user;
@@ -326,8 +288,6 @@ app.get('/api/chart/donut-idle-ratio', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// 7. Calendar Heatmap – Gün Bazlı Toplam Kullanım Süresi
 app.get('/api/chart/calendar-heatmap', async (req, res) => {
   try {
     const user = req.query.user;
@@ -353,8 +313,6 @@ app.get('/api/chart/calendar-heatmap', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// 8. Sankey Diyagramı – Uygulama Geçiş Akışı
 app.get('/api/chart/sankey-app-flow', async (req, res) => {
   try {
     const user = req.query.user;
@@ -379,8 +337,6 @@ app.get('/api/chart/sankey-app-flow', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// 9. Stacked Bar Chart – Birden Fazla Kullanıcıya Göre Uygulama Kullanımı
 app.get('/api/chart/stackedbar-user-app', async (req, res) => {
   try {
     const data = await ClientData.aggregate([
@@ -396,13 +352,10 @@ app.get('/api/chart/stackedbar-user-app', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// 10. Line Chart – Günlük Ortalama Oturum Süresi
 app.get('/api/chart/line-daily-session', async (req, res) => {
   try {
     const user = req.query.user;
     const match = user ? { user } : {};
-    // Oturum = aynı gün ve kullanıcıya ait ardışık kayıtlar (session_id yoksa)
     const data = await ClientData.aggregate([
       { $match: match },
       {
@@ -425,7 +378,7 @@ app.get('/api/chart/line-daily-session', async (req, res) => {
   }
 });
 
-// Adminleri getir
+// API: Admin yönetimi
 app.get('/api/admins', async (req, res) => {
   try {
     const admins = await Admin.find({}, 'name email _id');
@@ -434,8 +387,6 @@ app.get('/api/admins', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// Admin ekle
 app.post('/api/admins', async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -454,8 +405,6 @@ app.post('/api/admins', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-
-// Admin sil
 app.delete('/api/admins/:id', async (req, res) => {
   try {
     const result = await Admin.findByIdAndDelete(req.params.id);
@@ -467,6 +416,37 @@ app.delete('/api/admins/:id', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
+// PATCH: Admin şifresi güncelle
+app.patch('/api/admins/:id/password', async (req, res) => {
+  try {
+    const { password } = req.body;
+    if (!password || password.length < 4) {
+      return res.status(400).json({ error: 'Şifre en az 4 karakter olmalı.' });
+    }
+    const hashed = await bcrypt.hash(password, 10);
+    const result = await Admin.findByIdAndUpdate(
+      req.params.id,
+      { password: hashed },
+      { new: true }
+    );
+    if (!result) {
+      return res.status(404).json({ error: 'Admin bulunamadı' });
+    }
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Sunucu hatası' });
+  }
+});
+
+// Sunucu başlatılırken admin yoksa varsayılan admin oluştur
+(async () => {
+  const adminCount = await Admin.countDocuments();
+  if (adminCount === 0) {
+    const hashed = await bcrypt.hash('admin', 10);
+    await Admin.create({ name: 'Admin', email: 'admin@admin', password: hashed });
+    console.log('Varsayılan admin oluşturuldu: admin@admin / admin');
+  }
+})();
 
 app.listen(PORT, () => {
   console.log(`Sunucu http://localhost:${PORT} adresinde çalışıyor`);

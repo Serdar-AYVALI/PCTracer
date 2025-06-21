@@ -254,3 +254,5 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Fonksiyonları global olarak erişilebilir hale getir
 window.applyFilters = applyFilters;
 window.resetFilters = resetFilters;
+window.updateTop5Apps = updateTop5Apps;
+window.updateTable = updateTable;
