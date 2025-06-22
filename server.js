@@ -82,7 +82,7 @@ app.post('/user/login', async (req, res) => {
     }
     const match = await bcrypt.compare(password, admin.password);
     if (!match) {
-      return res.render('login', { error: 'Şifre hatalı' });
+      return res.render('login', { error: 'Parola hatalı' });
     }
     req.session.userId = admin._id;
     req.session.userName = admin.name;
@@ -416,12 +416,12 @@ app.delete('/api/admins/:id', async (req, res) => {
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
-// PATCH: Admin şifresi güncelle
+// PATCH: Admin parola güncelle
 app.patch('/api/admins/:id/password', async (req, res) => {
   try {
     const { password } = req.body;
     if (!password || password.length < 4) {
-      return res.status(400).json({ error: 'Şifre en az 4 karakter olmalı.' });
+      return res.status(400).json({ error: 'Parola en az 4 karakter olmalı.' });
     }
     const hashed = await bcrypt.hash(password, 10);
     const result = await Admin.findByIdAndUpdate(

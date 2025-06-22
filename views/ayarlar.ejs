@@ -261,7 +261,7 @@
                   <form id="adminAddForm" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;width:100%">
                     <input type="text" id="adminName" placeholder="Ad Soyad" required style="flex:1 1 120px">
                     <input type="email" id="adminEmail" placeholder="E-posta" required style="flex:1 1 180px">
-                    <input type="password" id="adminPassword" placeholder="Şifre" required style="flex:1 1 120px">
+                    <input type="password" id="adminPassword" placeholder="Parola" required style="flex:1 1 120px">
                     <button type="submit" style="flex:0 0 auto">Admin Ekle</button>
                     <span id="adminAddMsg" style="margin-left:10px;color:#2c3e50;flex:1 1 100px"></span>
                   </form>
@@ -314,9 +314,9 @@
                         <li class="user-item">
                           <span>${a.name} (${a.email})</span>
                           <button class="delete-btn" onclick="deleteAdmin('${a._id}')">Sil</button>
-                          <button class="delete-btn" style="background:#3498db;margin-left:8px;" onclick="showChangePasswordForm('${a._id}')">Şifre Değiştir</button>
+                          <button class="delete-btn" style="background:#3498db;margin-left:8px;" onclick="showChangePasswordForm('${a._id}')">Parola Değiştir</button>
                           <form class="change-password-form" id="changePwForm_${a._id}" style="display:none;gap:6px;margin-top:8px;flex-wrap:wrap;align-items:center;">
-                            <input type="password" id="newPw_${a._id}" placeholder="Yeni Şifre" required style="padding:5px 8px;border-radius:4px;border:1px solid #ddd;">
+                            <input type="password" id="newPw_${a._id}" placeholder="Yeni Parola" required style="padding:5px 8px;border-radius:4px;border:1px solid #ddd;">
                             <button type="submit" style="background:#36A2EB;color:#fff;padding:5px 12px;border:none;border-radius:4px;">Kaydet</button>
                             <span class="pw-msg" id="pwMsg_${a._id}" style="margin-left:8px;font-size:0.97em;"></span>
                           </form>
@@ -342,13 +342,13 @@
                     }
                   }
 
-                  // Şifre değiştir formunu göster/gizle
+                  // Parola değiştir formunu göster/gizle
                   window.showChangePasswordForm = function(id) {
                     document.querySelectorAll('.change-password-form').forEach(f => f.style.display = 'none');
                     const form = document.getElementById('changePwForm_' + id);
                     if (form) form.style.display = 'flex';
                   };
-                  // Şifre değiştir form submit
+                  // Parola değiştir form submit
                   window.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('adminList').addEventListener('submit', async function(e) {
                       if (e.target.classList.contains('change-password-form')) {
@@ -360,7 +360,7 @@
                         msg.textContent = '';
                         if (!newPw || newPw.length < 4) {
                           msg.style.color = 'red';
-                          msg.textContent = 'Şifre en az 4 karakter olmalı.';
+                          msg.textContent = 'Parola en az 4 karakter olmalı.';
                           return;
                         }
                         try {
@@ -372,7 +372,7 @@
                           const data = await res.json();
                           if (res.ok) {
                             msg.style.color = 'green';
-                            msg.textContent = 'Şifre güncellendi.';
+                            msg.textContent = 'Parola güncellendi.';
                             form.reset();
                             setTimeout(() => { form.style.display = 'none'; msg.textContent = ''; }, 1200);
                           } else {
